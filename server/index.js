@@ -39,3 +39,24 @@ app.post('/api/rooms/:roomId', function (req, res) {
     .catch(err => console.error(err))
 });
 
+app.post('/api/rooms/:roomId', function (req, res) {
+  const newReview = req.body
+  console.log(newReview)
+  Review.create({
+    roomId: req.params.roomId,
+    ...newReview
+  })
+    .then(data => { res.json(data) })
+    .catch(err => console.error(err))
+});
+
+app.patch('/api/rooms/:roomId', function (req, res) {
+  const updatedReview = req.body
+  console.log(updatedReview)
+  Review.create({
+    roomId: req.params.roomId,
+    ...updatedReview
+  })
+    .then(data => { res.json(data) })
+    .catch(err => console.error(err))
+});
