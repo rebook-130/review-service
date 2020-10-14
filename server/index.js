@@ -3,8 +3,10 @@ const path = require('path');
 const app = express();
 const bodyparser = require('body-parser')
 const Review = require('../database/index');
+const bodyparser = require('body-parser')
 
 app.use(express.static(__dirname + '/../client/dist'));
+app.use(bodyparser.json())
 
 const port = 3003;
 app.listen(port, () => {
@@ -25,3 +27,15 @@ app.get('/api/rooms/:roomId', function (req, res) {
       res.json(data);
     });
 });
+
+app.post('/api/rooms/:roomId', function (req, res) {
+  const newReview = req.body
+  console.log(newReview)
+  Review.create({
+    roomId: req.params.roomId,
+    ...newReview
+  })
+    .then(data => { res.json(data) })
+    .catch(err => console.error(err))
+});
+
