@@ -38,12 +38,13 @@ app.post('/api/rooms/:roomId', (req, res) => {
     .catch((err) => console.error(err));
 });
 
-app.patch('/api/rooms/:roomId', (req, res) => {
+app.patch('/api/rooms/:reviewId', (req, res) => {
   const updatedReview = req.body;
-  Review.create({
-    roomId: req.params.roomId,
-    ...updatedReview,
-  })
+  Review.findByIdAndUpdate(
+    req.params.reviewId,
+    { ...updatedReview },
+    { new: true },
+  )
     .then((data) => { res.json(data); })
     .catch((err) => console.error(err));
 });
