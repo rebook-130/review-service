@@ -48,3 +48,12 @@ app.patch('/api/rooms/:reviewId', (req, res) => {
     .then((data) => { res.json(data); })
     .catch((err) => console.error(err));
 });
+
+app.delete('/api/rooms/:reviewId', (req, res) => {
+  const updatedReview = req.body;
+  Review.findByIdAndRemove(
+    req.params.reviewId,
+  )
+    .then((data) => { res.json(data); })
+    .catch((err) => console.error(err));
+});
