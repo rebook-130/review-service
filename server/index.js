@@ -1,11 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-<<<<<<< HEAD
-const bodyparser = require('body-parser')
-=======
 const bodyparser = require('body-parser');
->>>>>>> 8d115fd... Put back changes
 const Review = require('../database/index');
 
 app.use(express.static(`${__dirname}/../client/dist`));
@@ -34,16 +30,6 @@ app.get('/api/rooms/:roomId', (req, res) => {
 app.post('/api/rooms/:roomId', (req, res) => {
   const newReview = req.body;
   console.log(newReview);
-  Review.create({
-    roomId: req.params.roomId,
-    ...newReview,
-  })
-    .then((data) => { res.json(data); })
-    .catch((err) => console.error(err));
-});
-
-app.post('/api/rooms/:roomId', (req, res) => {
-  const newReview = req.body;
   Review.create({
     roomId: req.params.roomId,
     ...newReview,
