@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const bodyparser = require('body-parser')
 const Review = require('../database/index');
 
 app.use(express.static(__dirname + '/../client/dist'));
