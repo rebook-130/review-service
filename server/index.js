@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -17,7 +18,7 @@ app.get('/rooms/*', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../client/dist/index.html`));
 });
 
-app.get('/api/rooms/:roomId', (req, res) => {
+app.get('/api/rooms/:roomId/reviews', (req, res) => {
   Review.find({
     roomId: req.params.roomId,
   })
@@ -27,7 +28,7 @@ app.get('/api/rooms/:roomId', (req, res) => {
     });
 });
 
-app.post('/api/rooms/:roomId', (req, res) => {
+app.post('/api/rooms/:roomId/reviews', (req, res) => {
   const newReview = req.body;
   console.log(newReview);
   Review.create({
@@ -38,7 +39,7 @@ app.post('/api/rooms/:roomId', (req, res) => {
     .catch((err) => console.error(err));
 });
 
-app.patch('/api/rooms/:reviewId', (req, res) => {
+app.patch('/api/reviews/:reviewId', (req, res) => {
   const updatedReview = req.body;
   Review.findByIdAndUpdate(
     req.params.reviewId,
@@ -49,11 +50,10 @@ app.patch('/api/rooms/:reviewId', (req, res) => {
     .catch((err) => console.error(err));
 });
 
-app.delete('/api/rooms/:reviewId', (req, res) => {
-  const updatedReview = req.body;
-  Review.findByIdAndRemove(
+app.delete('/api/reviews/:reviewId', (req, res) => {
+  Review.findByIdAndDelete(
     req.params.reviewId,
   )
-    .then((data) => { res.json(data); })
+    .then(() => res.send(`Review with _id: ${req.params.reviewId} deleted`))
     .catch((err) => console.error(err));
 });
