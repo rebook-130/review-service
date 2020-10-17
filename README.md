@@ -17,38 +17,6 @@ We built a replica of an Airbnb listing by splitting up the 4 main components: p
 1. [Requirements](#requirements)
 1. [Development](#development)
 
-## Usage
-
-> Some usage instructions
-
-To get the review component, run http://localhost:3003/rooms/:roomId with the corresponding roomId.
-
-API endpoints:
-
-- Endpoint: /api/rooms/:roomId
-- HTTP method: GET
-
-Shape of data:
-
-- Example response:
-  { \_id: 5f77756fe4123b1d8db62729,
-  username: 'Damon',
-  image:
-  'https://bookable-hrsf130-photos.s3.us-east-2.amazonaws.com/male-8.jpg',
-  dateNum: 1588704367,
-  dateStr: 'May 2020',
-  review:
-  'Minima provident aut maxime fugiat non nihil incidunt. Laboriosam tempore veritatis asperiores nostrum provident. Tempora eius eligendi temporibus tempora porro qui quas.\n \rModi enim consequatur illo enim. Repellat in numquam quidem exercitationem ipsam magnam ea. Enim ratione odit eligendi mollitia natus ut perferendis. At placeat incidunt repellendus temporibus similique et. Cupiditate sapiente quos quia.\n \rConsequatur et ut provident at et eos eveniet. Enim sunt dolorum quo officiis eos velit voluptate harum quisquam. Voluptas ut ea. Aliquid et quam consequatur error ad. Ut dolorem magni.',
-  roomId: 2,
-  cleanlinessRating: 4,
-  communicationRating: 5,
-  checkInRating: 4,
-  accuracyRating: 5,
-  locationRating: 5,
-  valueRating: 4,
-  totalRating: 4.5,
-  \_\_v: 0 }
-
 ## Requirements
 
 - Node 6.13.0
@@ -68,3 +36,98 @@ From within the root directory:
 - Run MongoDB: mongod --dbpath data
 - Run Webpack: npm run build:dev
 - Run Express server: npm run start:dev
+
+## Server API
+
+### Get all reviews for a room
+  * GET `/api/rooms/:roomId/reviews`
+
+**Path Parameters:**
+  * `roomId` room id
+
+**Success Status Code:** `200`
+
+**Returns:** JSON
+
+```json
+[
+    {
+        "_id": "5f87320c2f0ef0a36473b990",
+        "roomId": Number,
+        "username":String,
+        "image":String,
+        "dateNum":Number,
+        "dateStr":String,
+        "review":String,
+        "cleanlinessRating":Number,
+        "communicationRating":Number,
+        "checkInRating":Number,
+        "accuracyRating":Number,
+        "locationRating":Number,
+        "valueRating":Number,
+        "totalRating":Number,
+        "__v": 0
+    }
+]
+```
+
+### Add one review
+  * POST `/api/rooms/:roomId/reviews`
+
+**Path Parameters:**
+  * `roomId` room id
+
+**Success Status Code:** `200`
+
+**Request Body**: Expects JSON with the following keys.
+
+```json
+    {
+        "username":String,
+        "image":String,
+        "dateNum":Number,
+        "dateStr":String,
+        "review":String,
+        "cleanlinessRating":Number,
+        "communicationRating":Number,
+        "checkInRating":Number,
+        "accuracyRating":Number,
+        "locationRating":Number,
+        "valueRating":Number,
+        "totalRating":Number,
+    }
+```
+### Update an individial review
+  * PATCH `/api/reviews/:reviewId`
+
+**Path Parameters:**
+  * `reviewId` review id
+
+**Success Status Code:** `200`
+
+**Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
+
+```json
+    {
+        "username":String,
+        "image":String,
+        "dateNum":Number,
+        "dateStr":String,
+        "review":String,
+        "cleanlinessRating":Number,
+        "communicationRating":Number,
+        "checkInRating":Number,
+        "accuracyRating":Number,
+        "locationRating":Number,
+        "valueRating":Number,
+        "totalRating":Number,
+    }
+```
+
+### Delete a review
+  * DELETE `/api/reviews/:reviewId`
+
+**Path Parameters:**
+  * `reviewId` review id
+
+**Success Status Code:** `200`

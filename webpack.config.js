@@ -1,8 +1,8 @@
-var path = require('path');
+const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/dist');
+const SRC_DIR = path.join(__dirname, '/client/src');
+const DIST_DIR = path.join(__dirname, '/client/dist');
 
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
@@ -13,11 +13,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
-        },
+        test: /.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            plugins: ['@babel/plugin-transform-runtime'],
+          },
+        }],
       },
     ],
   },
@@ -35,4 +39,10 @@ module.exports = {
       ],
     }),
   ],
+  resolve: {
+    extensions: [
+      '.js',
+      '.jsx',
+    ],
+  },
 };

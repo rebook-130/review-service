@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/bookable');
+mongoose.connect('mongodb://localhost:27017/bookable', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
 
-const reviewSchema = mongoose.Schema ({
+const reviewSchema = mongoose.Schema({
   username: String,
   image: String,
   dateNum: Number,
@@ -15,9 +20,8 @@ const reviewSchema = mongoose.Schema ({
   accuracyRating: Number,
   locationRating: Number,
   valueRating: Number,
-  totalRating: Number
+  totalRating: Number,
 });
-
 
 const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;

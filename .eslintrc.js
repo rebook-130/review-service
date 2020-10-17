@@ -1,10 +1,30 @@
-/**
- * These rules enforce the Hack Reactor Style Guide
- *
- * Visit this repo for more information:
- *   https://github.com/reactorcore/eslint-config-hackreactor
- */
-
 module.exports = {
-  extends: './node_modules/eslint-config-hackreactor/index.js'
+  extends: [
+    'airbnb',
+  ],
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    jest: true,
+    node: true,
+  },
+  rules: {
+    'jsx-a11y/href-no-hash': ['off'],
+    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
+    'max-len': [
+      'warn',
+      {
+        code: 100,
+        tabWidth: 2,
+        comments: 100,
+        ignoreComments: false,
+        ignoreTrailingComments: true,
+        ignoreUrls: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreRegExpLiterals: true,
+      },
+    ],
+  },
 };
