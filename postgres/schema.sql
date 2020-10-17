@@ -4,7 +4,7 @@ CREATE DATABASE reviews
 
 CREATE TABLE reviews.listings
 (
-  listing_id PRIMARY KEY,
+  listing_id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   location VARCHAR(200) NOT NULL,
@@ -27,23 +27,24 @@ CREATE TABLE reviews.listings
 
 CREATE TABLE reviews.hosts
 (
-  host_id PRIMARY KEY,
-  name VARCHAR(150) NOT NULL,
+  host_id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
   superhost BOOLEAN,
   responserate SMALLINT NOT NULL,
 );
 
 CREATE TABLE reviews.users
 (
-  user_id PRIMARY KEY,
-  firstName VARCHAR(150),
-  lastName VARCHAR(150),
+  user_id SERIAL PRIMARY KEY,
+  firstName VARCHAR(100),
+  lastName VARCHAR(100),
   rating NUMERIC(2,1),
+  avatar_url TEXT,
 );
 
 CREATE TABLE reviews.reviews
 (
-  review_id PRIMARY KEY,
+  review_id SERIAL PRIMARY KEY,
   review_text TEXT NOT NULL,
   time_stamp TIMESTAMPZ NOT NULL,
 
