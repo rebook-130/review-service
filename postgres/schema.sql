@@ -2,7 +2,9 @@ DROP DATABASE IF EXISTS reviews
 
 CREATE DATABASE reviews
 
-CREATE TABLE reviews.listings
+\c reviews
+
+CREATE TABLE listings
 (
   listing_id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
@@ -25,7 +27,7 @@ CREATE TABLE reviews.listings
   [ON DELETE CASCADE]
 );
 
-CREATE TABLE reviews.hosts
+CREATE TABLE hosts
 (
   host_id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
@@ -33,7 +35,7 @@ CREATE TABLE reviews.hosts
   responserate SMALLINT NOT NULL,
 );
 
-CREATE TABLE reviews.users
+CREATE TABLE users
 (
   user_id SERIAL PRIMARY KEY,
   firstName VARCHAR(100),
@@ -42,7 +44,7 @@ CREATE TABLE reviews.users
   avatar_url TEXT,
 );
 
-CREATE TABLE reviews.reviews
+CREATE TABLE reviews
 (
   review_id SERIAL PRIMARY KEY,
   review_text TEXT NOT NULL,
