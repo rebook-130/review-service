@@ -4,8 +4,7 @@ CREATE DATABASE reviews
 
 CREATE TABLE reviews.listings
 (
-  listing_id INTEGER UNIQUE NOT NULL,
-  PRIMARY KEY(listing_id),
+  listing_id PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   location VARCHAR(200) NOT NULL,
@@ -28,8 +27,7 @@ CREATE TABLE reviews.listings
 
 CREATE TABLE reviews.hosts
 (
-  host_id INTEGER UNIQUE NOT NULL,
-  PRIMARY KEY(host_id),
+  host_id PRIMARY KEY,
   name VARCHAR(150) NOT NULL,
   superhost BOOLEAN,
   responserate SMALLINT NOT NULL,
@@ -37,7 +35,7 @@ CREATE TABLE reviews.hosts
 
 CREATE TABLE reviews.users
 (
-  user_id INTEGER UNIQUE NOT NULL,
+  user_id PRIMARY KEY,
   firstName VARCHAR(150),
   lastName VARCHAR(150),
   rating NUMERIC(2,1),
@@ -45,8 +43,7 @@ CREATE TABLE reviews.users
 
 CREATE TABLE reviews.reviews
 (
-  review_id INTEGER UNIQUE NOT NULL,
-  PRIMARY KEY(review_id),
+  review_id PRIMARY KEY,
   review_text TEXT NOT NULL,
   time_stamp TIMESTAMPZ NOT NULL,
 
