@@ -21,7 +21,7 @@ CREATE TABLE reviews.listings (
   lowest_price decimal,
   host_id int,
 
-  PRIMARY KEY ((listing_id, location), host_id))
+  PRIMARY KEY (location, host_id))
   WITH comment = 'All listings'
   AND CLUSTERING ORDER BY (host_id ASC)
 
@@ -32,7 +32,7 @@ CREATE TABLE reviews.hosts (
   responserate smallint,
   PRIMARY KEY (host_id))
   WITH COMMENT = 'All hosts'
-  AND CLUSTERING ORDER BY (host_id ASC)
+  --AND CLUSTERING ORDER BY (host_id ASC)
 
 CREATE TABLE reviews.users
 (
@@ -41,7 +41,8 @@ CREATE TABLE reviews.users
   lastName text,
   rating decimal,
   avatar_url text,
-);
+  PRIMARY KEY (user_id)
+  WITH COMMENT = 'All users'
 
 CREATE TABLE reviews.reviews_by_listing
 (
@@ -56,9 +57,8 @@ CREATE TABLE reviews.reviews_by_listing
   communication tinyint,
   checkinrating tinyint,
   accuracy tinyint,
-  location tinyint,
   value tinyint,
 
-  PRIMARY KEY((review_id, listing_id), time_stamp)
+  PRIMARY KEY(listing_id, time_stamp, review_id)
   WITH comment='Reviews by listing'
   AND CLUSTERING ORDER BY (time_stamp DESC)
