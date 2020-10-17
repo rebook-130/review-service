@@ -77,7 +77,7 @@ From within the root directory:
 **Path Parameters:**
   * `roomId` room id
 
-**Success Status Code:** `200`
+**Success Status Code:** `201`
 
 **Request Body**: Expects JSON with the following keys.
 
@@ -130,4 +130,4 @@ From within the root directory:
 **Path Parameters:**
   * `reviewId` review id
 
-**Success Status Code:** `200`
+**Success Status Code:** `204`
