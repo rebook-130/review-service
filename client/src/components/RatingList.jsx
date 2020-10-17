@@ -24,20 +24,19 @@ const AllRows = styled.div`
 
   ${(props) =>
     props.isModal
-      ? '@media (max-width: 700px) {flex-direction: column; justify-content: flex-start;}'
+      ? '@media (max-width: 730px) {flex-direction: column; justify-content: flex-start;}'
       : null};
 `;
 
 const CategorySubcontainer = styled.div`
-  ${(props) => (props.isModal ? 'width: 70%;' : 'width: 45%;')}
+  ${(props) => (props.isModal ? 'width: 80%;' : 'width: 45%;')}
 
   @media (max-width: 1220px) {
-    ${(props) =>
-      props.isModal ? 'width: 40%; min-width: 200px' : null}
+    ${(props) => (props.isModal ? 'width: 40%; min-width: 200px' : null)}
   }
 
   ${(props) =>
-    props.isModal ? '@media (max-width: 700px) {width: 100%;}' : null};
+    props.isModal ? '@media (max-width: 730px) {width: 100%;}' : null};
 `;
 
 export const Row = styled.div`

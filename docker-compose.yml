@@ -1,0 +1,16 @@
+version: "3"
+services:
+  proxy:
+    build: ../Catherine-proxy
+    ports:
+      - "3000:3000"
+  review-service:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "3003:3003"
+  db:
+    image: mongo:4.2.8
+    volumes:
+      - ./data:/data/db
