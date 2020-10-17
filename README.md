@@ -72,7 +72,7 @@ From within the root directory:
 ```
 
 ### Add one review
-  * POST `/api/rooms/:roomId/reviews`
+  * POST `/api/rooms/:roomId/review`
 
 **Path Parameters:**
   * `roomId` room id
