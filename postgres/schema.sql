@@ -9,8 +9,6 @@ CREATE TABLE listings
   listing_id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
-  location VARCHAR(200) NOT NULL,
-  type VARCHAR(100) NOT NULL,
   bedrooms SMALLINT NOT NULL,
   bathrooms SMALLINT NOT NULL,
   beds SMALLINT NOT NULL,
