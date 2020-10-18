@@ -28,7 +28,8 @@ CREATE TABLE listings
 CREATE TABLE hosts
 (
   host_id SERIAL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  firstName VARCHAR(50) NOT NULL,
+  lastName VARCHAR(50) NOT NULL,
   superhost BOOLEAN,
   responserate SMALLINT NOT NULL,
 );
