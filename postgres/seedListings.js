@@ -13,7 +13,6 @@ const csvoptions = {
 
 const writer = csvWriter(csvoptions);
 
-// Create listings.csv file
 for (let j = 1; j <= 5; j += 1) {
   writer.pipe(fs.createWriteStream(`data/listings_${j}.csv`));
   for (let i = 1; i <= 1000000; i += 1) {
