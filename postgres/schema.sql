@@ -1,29 +1,8 @@
-DROP DATABASE IF EXISTS reviews
+DROP DATABASE IF EXISTS reviews;
 
-CREATE DATABASE reviews
+CREATE DATABASE reviews;
 
-\c reviews
-
-CREATE TABLE listings
-(
-  listing_id SERIAL PRIMARY KEY,
-  title VARCHAR(100) NOT NULL,
-  description TEXT NOT NULL,
-  bedrooms SMALLINT NOT NULL,
-  bathrooms SMALLINT NOT NULL,
-  beds SMALLINT NOT NULL,
-  maxguests SMALLINT NOT NULL,
-  variableprice BOOLEAN NOT NULL,
-  plus BOOLEAN NOT NULL,
-  cancellation_policy VARCHAR(100) NOT NULL,
-  lowest_price NUMERIC(7,2),
-  host_id INTEGER NOT NULL,
-
-  [CONSTRAINT fk_hosts]
-    FOREIGN KEY (host_id)
-    REFERENCES hosts(host_id)
-  [ON DELETE CASCADE]
-);
+\c reviews;
 
 CREATE TABLE hosts
 (
@@ -41,6 +20,24 @@ CREATE TABLE users
   lastName VARCHAR(100),
   rating NUMERIC(2,1),
   avatar_url TEXT,
+);
+
+CREATE TABLE listings
+(
+  listing_id SERIAL PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  bedrooms SMALLINT NOT NULL,
+  bathrooms SMALLINT NOT NULL,
+  beds SMALLINT NOT NULL,
+  maxguests SMALLINT NOT NULL,
+  variableprice BOOLEAN NOT NULL,
+  plus BOOLEAN NOT NULL,
+  cancellation_policy VARCHAR(100) NOT NULL,
+  lowest_price NUMERIC(7,2),
+  host_id INTEGER NOT NULL,
+
+  FOREIGN KEY (host_id) REFERENCES host(host_id)
 );
 
 CREATE TABLE reviews
