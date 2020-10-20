@@ -4,26 +4,21 @@ CREATE DATABASE reviews;
 
 \c reviews;
 
-CREATE TABLE hosts
-(
+CREATE TABLE hosts (
   host_id SERIAL PRIMARY KEY,
   firstName VARCHAR(50) NOT NULL,
   lastName VARCHAR(50) NOT NULL,
   superhost BOOLEAN,
-  responserate SMALLINT NOT NULL,
-);
+  response_rate SMALLINT NOT NULL);
 
-CREATE TABLE users
-(
+CREATE TABLE users(
   user_id SERIAL PRIMARY KEY,
   firstName VARCHAR(100),
   lastName VARCHAR(100),
   rating NUMERIC(2,1),
-  avatar_url TEXT,
-);
+  avatar_url TEXT);
 
-CREATE TABLE listings
-(
+CREATE TABLE listings(
   listing_id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
@@ -36,15 +31,15 @@ CREATE TABLE listings
   cancellation_policy VARCHAR(100) NOT NULL,
   lowest_price NUMERIC(7,2),
   host_id INTEGER NOT NULL,
+  CONSTRAINT fk_hosts
+    FOREIGN KEY (host_id)
+    REFERENCES hosts
+    ON DELETE CASCADE);
 
-  FOREIGN KEY (host_id) REFERENCES host(host_id)
-);
-
-CREATE TABLE reviews
-(
+CREATE TABLE reviews(
   review_id SERIAL PRIMARY KEY,
   review_text TEXT NOT NULL,
-  time_stamp TIMESTAMPZ NOT NULL,
+  time_stamp TIMESTAMPTZ NOT NULL,
 
   cleanliness NUMERIC(2,1) NOT NULL,
   communication NUMERIC(2,1) NOT NULL,
@@ -53,15 +48,5 @@ CREATE TABLE reviews
   location NUMERIC(2,1) NOT NULL,
   value NUMERIC(2,1) NOT NULL,
 
-  listing_id INTEGER NOT NULL,
-  [CONSTRAINT fk_listings]
-    FOREIGN KEY (listing_id)
-  REFERENCES listings(listing_id)
-  [ON DELETE CASCADE]
-
-  user_id INTEGER NOT NULL,
-  [CONSTRAINT fk_users]
-    FOREIGN KEY (user_id)
-    REFERENCES users (user_id)
-    [ON DELETE CASCADE]
-);
+  listing_id INTEGER NOT NULL REFERENCES listings ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE);
