@@ -1,33 +1,17 @@
 /* eslint-disable no-console */
-const csvWriter = require('csv-write-stream');
 const faker = require('faker');
-const fs = require('fs');
-const {
-  createTitle, cancellation, paragraphs, dates,
-} = require('./seedHelpers');
+const generator = require('./generator');
 
-const csvoptions = {
-  separator: ',',
-  newline: '\n',
-  sendHeaders: false,
+const createHost = () => {
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+  const superhost = Math.random() > 0.5;
+  const responseRate = Math.ceil((Math.random() * (100 - 95)) + 95);
+
+  const line = `${firstName},${lastName},${superhost},${responseRate}\n`;
+
+  return line;
 };
 
-const writer = csvWriter(csvoptions);
-
-for (let j = 1; j <= 2; j += 1) {
-  writer.pipe(fs.createWriteStream(`data/hosts_${j}.csv`));
-  for (let i = 1; i <= 1000000; i += 1) {
-    const createHost = {
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      superhost: Math.random() > 0.5,
-      responserate: Math.ceil((Math.random() * (100 - 95)) + 95),
-    };
-    if (i % 100000 === 0) {
-      console.log(`${i + ((j - 1) * 2000000)} hosts created`);
-    }
-    writer.write(createHost);
-  }
-}
-
-writer.end();
+// Create 2 million hosts
+generator('data/hosts.csv', '2000000', createHost, 'hosts');

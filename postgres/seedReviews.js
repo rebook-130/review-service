@@ -1,46 +1,37 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
-const csvWriter = require('csv-write-stream');
-const fs = require('fs');
+const generator = require('./generator');
 const {
   createTitle, cancellation, paragraphs, dates,
 } = require('./seedHelpers');
 
-const csvoptions = {
-  separator: ',',
-  newline: '\n',
-  sendHeaders: false,
+const createReview = () => {
+  const date = dates();
+  const review_text = paragraphs();
+  const time_stamp = date.epoch;
+  const time_formatted = date.dateFormat;
+
+  const cleanliness = Math.ceil(Math.random() * (5 - 2) + 2);
+  const communication = Math.ceil(Math.random() * (5 - 2) + 2);
+  const checkinrating = Math.ceil(Math.random() * (5 - 2) + 2);
+  const accuracy = Math.ceil(Math.random() * (5 - 2) + 2);
+  const location = Math.ceil(Math.random() * (5 - 2) + 2);
+  const value = Math.ceil(Math.random() * (5 - 2) + 2);
+
+  const listing_id = Math.ceil(Math.random() * (10000000) + 1);
+  const user_id = Math.ceil(Math.random() * (3000000) + 1);
+
+  const line = `${review_text},${time_stamp},${time_formatted},${cleanliness},${communication},${checkinrating},${accuracy},${location},${value},${listing_id},${user_id}\n`;
+
+  return line;
 };
 
-const writer = csvWriter(csvoptions);
+// Create 70 million reviews
 
-let count = 0;
-for (let j = 1; j <= 10; j += 1) {
-  writer.pipe(fs.createWriteStream(`data/reviews_${j}.csv`));
-  for (let i = 1; i <= 10000; i += 1) {
-    const date = dates();
-    const createReview = {
-      review_text: paragraphs(),
-      time_stamp: date.epoch,
-      time_formatted: date.dateFormat,
-
-      cleanliness: Math.ceil(Math.random() * (5 - 2) + 2),
-      communication: Math.ceil(Math.random() * (5 - 2) + 2),
-      checkinrating: Math.ceil(Math.random() * (5 - 2) + 2),
-      accuracy: Math.ceil(Math.random() * (5 - 2) + 2),
-      location: Math.ceil(Math.random() * (5 - 2) + 2),
-      value: Math.ceil(Math.random() * (5 - 2) + 2),
-
-      listing_id: Math.ceil(Math.random() * (10000000) + 1),
-      user_id: Math.ceil(Math.random() * (3000000) + 1),
-
-    };
-
-    count += 1;
-    if (i % 10000 === 0) {
-      console.log(`${count} reviews created`);
-    }
-    writer.write(createReview);
-  }
-}
-
-writer.end();
+// generator('data/reviews_1.csv', '10000000', createReview, 'reviews');
+// generator('data/reviews_2.csv', '10000000', createReview, 'reviews');
+// generator('data/reviews_3.csv', '10000000', createReview, 'reviews');
+// generator('data/reviews_4.csv', '10000000', createReview, 'reviews');
+generator('data/reviews_5.csv', '10000000', createReview, 'reviews');
+generator('data/reviews_6.csv', '10000000', createReview, 'reviews');
+// generator('data/reviews_7.csv', '10000000', createReview, 'reviews');
