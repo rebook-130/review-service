@@ -5,11 +5,20 @@ CREATE KEYSPACE reviews WITH replication =
 
 USE reviews
 
+CREATE TABLE reviews.users
+(
+  user_id INTEGER ,
+  first_name text,
+  last_name text,
+  rating decimal,
+  avatar_url text,
+  PRIMARY KEY (user_id))
+  WITH COMMENT = 'All users'
+
 CREATE TABLE reviews.listings (
   listing_id int,
   title text,
-  description text,
-  location text,
+  descrip text,
   type text,
   bedrooms tinyint,
   bathrooms tinyint,
@@ -19,36 +28,15 @@ CREATE TABLE reviews.listings (
   plus boolean,
   cancellation_policy text,
   lowest_price decimal,
-  host_id int,
 
-  PRIMARY KEY (location, host_id))
+  PRIMARY KEY (listing_id)
   WITH comment = 'All listings'
-  AND CLUSTERING ORDER BY (host_id ASC)
-
-CREATE TABLE reviews.hosts (
-  host_id int,
-  name text,
-  superhost boolean,
-  responserate smallint,
-  PRIMARY KEY (host_id))
-  WITH COMMENT = 'All hosts'
-  --AND CLUSTERING ORDER BY (host_id ASC)
-
-CREATE TABLE reviews.users
-(
-  user_id INTEGER ,
-  firstName text,
-  lastName text,
-  rating decimal,
-  avatar_url text,
-  PRIMARY KEY (user_id)
-  WITH COMMENT = 'All users'
+  AND CLUSTERING ORDER BY (listing_id ASC)
 
 CREATE TABLE reviews.reviews_by_listing
 (
   review_id int,
-  listing_id int,
-  user_firstName text,
+  user_first_name text,
   user_avatar text,
   review_text text,
   time_stamp timeuuid,
@@ -57,8 +45,10 @@ CREATE TABLE reviews.reviews_by_listing
   communication tinyint,
   checkinrating tinyint,
   accuracy tinyint,
+  location tinyint,
   value tinyint,
 
+  listing_id int,
   PRIMARY KEY(listing_id, time_stamp, review_id)
   WITH comment='Reviews by listing'
   AND CLUSTERING ORDER BY (time_stamp DESC)
