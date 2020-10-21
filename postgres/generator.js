@@ -7,7 +7,7 @@ const fs = require('fs');
 const generator = (filename, lines, create, unit) => {
   const filenameParam = filename || 'output.csv';
   const linesParam = lines || 1000000;
-  const stream = fs.createWriteStream(filenameParam, { autoClose: true });
+  const stream = fs.createWriteStream(filenameParam, { autoClose: true, emitClose: true });
 
   const startWriting = (writeStream, encoding, done) => {
     let i = linesParam;
@@ -16,7 +16,7 @@ const generator = (filename, lines, create, unit) => {
 
       do {
         i -= 1;
-        if (i % 100000 === 0) {
+        if (i % 10000 === 0) {
           console.log(`${i} ${unit} remaining`);
         }
         const post = create();
@@ -39,14 +39,18 @@ const generator = (filename, lines, create, unit) => {
       }
     }
     // initiate our writing function
-    writing();
+   writing();
   };
 
   // //write our `header` line before we invoke the loop
   // stream.write(`userId,title,content,image,date\n`, 'utf-8')
   // invoke startWriting and pass callback
+
   startWriting(stream, 'utf-8', () => {
-    stream.end();
+    stream.end('', 'utf-8', stream.on('finish', () => {
+      console.log('All writes are now complete.');
+    }));
+
   });
 };
 

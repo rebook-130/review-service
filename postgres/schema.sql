@@ -4,24 +4,17 @@ CREATE DATABASE reviews;
 
 \c reviews;
 
-CREATE TABLE hosts (
-  host_id SERIAL PRIMARY KEY,
-  firstName VARCHAR(50) NOT NULL,
-  lastName VARCHAR(50) NOT NULL,
-  superhost BOOLEAN,
-  response_rate SMALLINT NOT NULL);
-
 CREATE TABLE users(
   user_id SERIAL PRIMARY KEY,
-  firstName VARCHAR(100),
-  lastName VARCHAR(100),
-  rating NUMERIC(2,1),
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  rating NUMERIC(4,1),
   avatar_url TEXT);
 
 CREATE TABLE listings(
   listing_id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
-  description TEXT NOT NULL,
+  descrip TEXT NOT NULL,
   bedrooms SMALLINT NOT NULL,
   bathrooms SMALLINT NOT NULL,
   beds SMALLINT NOT NULL,
@@ -29,24 +22,33 @@ CREATE TABLE listings(
   variableprice BOOLEAN NOT NULL,
   plus BOOLEAN NOT NULL,
   cancellation_policy VARCHAR(100) NOT NULL,
-  lowest_price NUMERIC(7,2),
-  host_id INTEGER NOT NULL,
-  CONSTRAINT fk_hosts
-    FOREIGN KEY (host_id)
-    REFERENCES hosts
-    ON DELETE CASCADE);
+  lowest_price NUMERIC(7,2)
+  );
 
 CREATE TABLE reviews(
   review_id SERIAL PRIMARY KEY,
   review_text TEXT NOT NULL,
-  time_stamp TIMESTAMPTZ NOT NULL,
+  time_stamp TEXT NOT NULL,
+  time_formatted TEXT NOT NULL,
 
-  cleanliness NUMERIC(2,1) NOT NULL,
-  communication NUMERIC(2,1) NOT NULL,
-  checkinrating NUMERIC(2,1) NOT NULL,
-  accuracy NUMERIC(2,1) NOT NULL,
-  location NUMERIC(2,1) NOT NULL,
-  value NUMERIC(2,1) NOT NULL,
+  cleanliness SMALLINT NOT NULL,
+  communication SMALLINT NOT NULL,
+  checkinrating SMALLINT NOT NULL,
+  accuracy SMALLINT NOT NULL,
+  location SMALLINT NOT NULL,
+  value SMALLINT NOT NULL,
 
   listing_id INTEGER NOT NULL REFERENCES listings ON DELETE CASCADE,
   user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE);
+
+COPY users(first_name,last_name,rating,avatar_url)
+FROM '/Volumes/sdc/postgres/users.csv'
+WITH (format csv);
+
+COPY listings(title,descrip,bedrooms,bathrooms,beds,maxguests,variableprice,plus,cancellation_policy,lowest_price,host_id)
+FROM '/Volumes/sdc/postgres/listings.csv'
+WITH (format csv);
+
+COPY reviews(review_text,time_stamp,time_formatted,cleanliness,communication,checkinrating,accuracy,location,value,listing_id,user_id)
+FROM '/Volumes/sdc/postgres/reviews.csv'
+WITH (format csv);
