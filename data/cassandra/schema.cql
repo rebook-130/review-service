@@ -5,37 +5,37 @@ CREATE KEYSPACE reviews WITH replication =
 
 USE reviews
 
-CREATE TABLE reviews.users
-(
-  user_id INTEGER ,
-  first_name text,
-  last_name text,
-  rating decimal,
-  avatar_url text,
-  PRIMARY KEY (user_id))
-  WITH COMMENT = 'All users'
+-- CREATE TABLE reviews.users
+-- (
+--   user_id INTEGER ,
+--   first_name text,
+--   last_name text,
+--   rating decimal,
+--   avatar_url text,
+--   PRIMARY KEY (user_id))
+--   WITH COMMENT = 'All users'
 
-CREATE TABLE reviews.listings (
-  listing_id int,
-  title text,
-  descrip text,
-  type text,
-  bedrooms tinyint,
-  bathrooms tinyint,
-  beds tinyint,
-  maxguests tinyint,
-  variableprice boolean,
-  plus boolean,
-  cancellation_policy text,
-  lowest_price decimal,
+-- CREATE TABLE reviews.listings (
+--   listing_id int,
+--   title text,
+--   descrip text,
+--   type text,
+--   bedrooms tinyint,
+--   bathrooms tinyint,
+--   beds tinyint,
+--   maxguests tinyint,
+--   variableprice boolean,
+--   plus boolean,
+--   cancellation_policy text,
+--   lowest_price decimal,
 
-  PRIMARY KEY (listing_id)
-  WITH comment = 'All listings'
-  AND CLUSTERING ORDER BY (listing_id ASC)
+--   PRIMARY KEY (listing_id)
+--   WITH comment = 'All listings'
+--   AND CLUSTERING ORDER BY (listing_id ASC)
 
 CREATE TABLE reviews.reviews_by_listing
 (
-  review_id int,
+  id int,
   user_first_name text,
   user_avatar text,
   review_text text,

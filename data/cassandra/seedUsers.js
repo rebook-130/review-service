@@ -6,6 +6,7 @@ const generator = require('./generatorCsv');
 
 const createUser = () => {
   const line = {
+    user_id: null,
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     rating: (Math.random() * (100 - 95) + 95).toFixed(1),
