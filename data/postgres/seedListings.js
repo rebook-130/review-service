@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-const generator = require('./generatorCsv');
+const generator = require('../generatorCsv');
 const {
   createTitle, cancellation, paragraphs, dates,
 } = require('./seedHelpers');

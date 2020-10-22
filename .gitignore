@@ -24,10 +24,7 @@ coverage
 build/
 dist/
 
-data
-
 yarn.lock
 .eslintrc.js
 
 *.csv
-data
