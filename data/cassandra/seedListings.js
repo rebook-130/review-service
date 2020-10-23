@@ -4,7 +4,7 @@
 const generator = require('./generatorCsv');
 const {
   createTitle, cancellation, paragraphs, dates,
-} = require('./seedHelpers');
+} = require('../seedHelpers');
 
 const createListing = () => {
   const bedrooms = Math.floor((Math.random() * 6) + 1);

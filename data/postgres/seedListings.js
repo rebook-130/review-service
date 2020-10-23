@@ -4,10 +4,12 @@
 const generator = require('../generatorCsv');
 const {
   createTitle, cancellation, paragraphs, dates,
-} = require('./seedHelpers');
+} = require('../seedHelpers');
+
+const random = function random(min, max) { Math.ceil(Math.random() * (max - min) + min); };
 
 const createListing = () => {
-  const bedrooms = Math.floor((Math.random() * 6) + 1);
+  const bedrooms = random(1, 6);
   const line = {
     title: createTitle(),
     description: paragraphs(),
@@ -18,13 +20,13 @@ const createListing = () => {
     variablePrice: Math.random() < 0.5,
     plus: Math.random() > 0.5,
     cancellation_policy: cancellation(),
-    lowest_price: Math.floor((Math.random() * (1000 - 75)) + 75),
+    lowest_price: random(75, 1000),
   };
 
   const header = Object.keys(line);
   return { line, header };
 };
 
-// Create 10 million listings
+// Create 5 million listings
 generator('/Volumes/sdc/postgres/listings.csv', '5000000', createListing, 'listings')
   .then(() => console.log('Listings done'));

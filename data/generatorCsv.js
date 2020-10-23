@@ -7,29 +7,42 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const generator = async (filename, lines, create, unit) => {
   const filenameParam = filename || 'output.csv';
+  const cassandra = filenameParam.split('/').includes('cassandra');
   const linesParam = lines || 1000000;
 
   const getHeader = create();
+  const header = [];
+  getHeader.header.map((key) => header.push({ id: key, title: key }));
 
-  fs.unlinkSync(filenameParam);
+  try {
+    fs.accessSync(filenameParam, fs.F_OK);
+    fs.unlinkSync(filenameParam);
+    console.log(`${filenameParam} deleted`);
+  } catch (err) {
+    console.log(`File doesn't exist: ${err}`);
+  }
 
   const csvWriter = createCsvWriter({
     path: filenameParam,
-    header: getHeader.header,
+    header,
     append: true,
+    // alwaysQuote: true,
   });
 
   let recordCount = 0;
   while (recordCount < linesParam) {
     let records = [];
     for (let i = 0; i < linesParam / 100; i += 1) {
+      recordCount += 1;
       const record = create();
+      if (cassandra) {
+        record.line.id = recordCount;
+      }
       records.push(record.line);
 
       if (i % (linesParam / 1000) === 0 && i > 0) {
         console.log(`${i} records created`);
       }
-      recordCount += 1;
     }
 
     await csvWriter.writeRecords(records)

@@ -1,9 +1,8 @@
-DROP KEYSPACE IF EXISTS reviews
+DROP KEYSPACE IF EXISTS reviews;
 
-CREATE KEYSPACE reviews WITH replication =
-  {‘class’: ‘SimpleStrategy’, ‘replication_factor’ : 1};
+CREATE KEYSPACE reviews WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1};
 
-USE reviews
+USE reviews;
 
 -- CREATE TABLE reviews.users
 -- (
@@ -39,7 +38,8 @@ CREATE TABLE reviews.reviews_by_listing
   user_first_name text,
   user_avatar text,
   review_text text,
-  time_stamp timeuuid,
+  time_stamp text,
+  time_formatted text,
 
   cleanliness tinyint,
   communication tinyint,
@@ -48,7 +48,13 @@ CREATE TABLE reviews.reviews_by_listing
   location tinyint,
   value tinyint,
 
+  zip_code text,
+  bedrooms tinyint,
   listing_id int,
-  PRIMARY KEY(listing_id, time_stamp, review_id)
-  WITH comment='Reviews by listing'
-  AND CLUSTERING ORDER BY (time_stamp DESC)
+
+  PRIMARY KEY((listing_id), time_stamp))
+  WITH comment='Reviews by listing' AND CLUSTERING ORDER BY (time_stamp DESC);
+
+COPY reviews_by_listing (id,user_first_name,user_avatar,review_text,time_stamp,time_formatted,cleanliness,communication,checkinrating,accuracy,location,value,zip_code,bedrooms,listing_id) FROM '/Volumes/sdc/cassandra/reviews.csv' with header=false and delimiter =',';
+
+CREATE INDEX idx_reviews ON reviews.reviews_by_listing(id);

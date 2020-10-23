@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-console */
 const faker = require('faker');
-const generator = require('./generatorCsv');
+const generator = require('../generatorCsv');
 
 const createUser = () => {
   const line = {

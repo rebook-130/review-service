@@ -42,16 +42,16 @@ function cancellation() {
 function paragraphs() {
   const lorem = new LoremIpsum({
     sentencesPerParagraph: {
-      max: 4,
+      max: 6,
       min: 2,
     },
     wordsPerSentence: {
-      max: 12,
+      max: 16,
       min: 4,
     },
   });
 
-  return lorem.generateParagraphs(Math.ceil((Math.random() * 3 - 1) + 1));
+  return lorem.generateParagraphs(1);
 }
 
 function dates() {

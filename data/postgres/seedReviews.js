@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-const generator = require('./generatorCsv');
+const generator = require('../generatorCsv');
 
 const {
   createTitle, cancellation, paragraphs, dates,
-} = require('./seedHelpers');
+} = require('../seedHelpers');
+
+const random = function random(min, max) { Math.ceil(Math.random() * (max - min) + min); };
 
 const createReview = () => {
   const date = dates();
@@ -13,14 +15,14 @@ const createReview = () => {
     review_text: paragraphs(),
     time_stamp: date.epoch,
     time_formatted: date.dateFormat,
-    cleanliness: Math.ceil(Math.random() * (5 - 2) + 2),
-    communication: Math.ceil(Math.random() * (5 - 2) + 2),
-    checkinrating: Math.ceil(Math.random() * (5 - 2) + 2),
-    accuracy: Math.ceil(Math.random() * (5 - 2) + 2),
-    location: Math.ceil(Math.random() * (5 - 2) + 2),
-    value: Math.ceil(Math.random() * (5 - 2) + 2),
-    listing_id: Math.ceil(Math.random() * (10000000) + 1),
-    user_id: Math.ceil(Math.random() * (3000000) + 1),
+    cleanliness: random(2, 5),
+    communication: random(2, 5),
+    checkinrating: random(2, 5),
+    accuracy: random(2, 5),
+    location: random(2, 5),
+    value: random(2, 5),
+    listing_id: random(1, 5000000),
+    user_id: random(1, 3000000),
   };
 
   const header = Object.keys(line);

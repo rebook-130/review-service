@@ -53,3 +53,4 @@ WITH (format csv);
 COPY reviews(review_text,time_stamp,time_formatted,cleanliness,communication,checkinrating,accuracy,location,value,listing_id,user_id)
 FROM '/Volumes/sdc/postgres/reviews.csv'
 WITH (format csv);
+
