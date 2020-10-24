@@ -46,9 +46,6 @@ const generator = async (filename, lines, create, unit) => {
       .then(() => {
         console.log(`${recordCount}/${linesParam} ${unit} written to ${filenameParam}`);
       })
-      .then(() => {
-        records = [];
-      })
       .catch((err) => console.log(err));
   }
 };
