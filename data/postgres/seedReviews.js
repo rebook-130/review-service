@@ -7,7 +7,7 @@ const {
   createTitle, cancellation, paragraphs, dates,
 } = require('../seedHelpers');
 
-const random = function random(min, max) { Math.ceil(Math.random() * (max - min) + min); };
+const random = function random(min, max) { return Math.ceil(Math.random() * (max - min) + min); };
 
 const createReview = () => {
   const date = dates();
@@ -22,7 +22,7 @@ const createReview = () => {
     location: random(2, 5),
     value: random(2, 5),
     listing_id: random(1, 5000000),
-    user_id: random(1, 3000000),
+    user_id: random(1, 2000000),
   };
 
   const header = Object.keys(line);

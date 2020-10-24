@@ -7,7 +7,7 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const generator = async (filename, lines, create, unit) => {
   const filenameParam = filename || 'output.csv';
-  const cassandra = filenameParam.split('/').includes('cassandra');
+  const cassandra = filenameParam.split('/').includes('cassandra') || filenameParam.split('/').includes('cassandra_split');
   const linesParam = lines || 1000000;
 
   const getHeader = create();

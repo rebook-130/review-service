@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
+const faker = require('faker');
 const generator = require('../generatorCsv');
 const {
   createTitle, cancellation, paragraphs, dates,
 } = require('../seedHelpers');
 
-const random = function random(min, max) { Math.ceil(Math.random() * (max - min) + min); };
+const random = function random(min, max) { return Math.ceil(Math.random() * (max - min) + min); };
 
 const createListing = () => {
   const bedrooms = random(1, 6);
@@ -21,6 +22,7 @@ const createListing = () => {
     plus: Math.random() > 0.5,
     cancellation_policy: cancellation(),
     lowest_price: random(75, 1000),
+    zip_code: faker.address.zipCode(),
   };
 
   const header = Object.keys(line);
