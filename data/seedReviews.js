@@ -2,11 +2,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 const faker = require('faker');
-const generator = require('../generatorCsv');
+const generator = require('./generatorCsv');
 
 const {
   createTitle, cancellation, paragraphs, dates,
-} = require('../seedHelpers');
+} = require('./seedHelpers');
 
 const random = function random(min, max) { return Math.ceil(Math.random() * (max - min) + min); };
 

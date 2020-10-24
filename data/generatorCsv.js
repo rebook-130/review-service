@@ -7,26 +7,23 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const generator = async (filename, lines, create, unit) => {
   const filenameParam = filename || 'output.csv';
-  const cassandra = filenameParam.split('/').includes('cassandra') || filenameParam.split('/').includes('cassandra_split');
+  const cassandra = filenameParam.split('/').includes('cassandra')
+    || filenameParam.split('/').includes('cassandra_split');
   const linesParam = lines || 1000000;
 
-  const getHeader = create();
-  const header = [];
-  getHeader.header.map((key) => header.push({ id: key, title: key }));
-
   try {
-    fs.accessSync(filenameParam, fs.F_OK);
-    fs.unlinkSync(filenameParam);
+    fs.accessSync(filenameParam, fs.F_OK); // check if file exists
+    fs.unlinkSync(filenameParam); // if it does, delete it
     console.log(`${filenameParam} deleted`);
   } catch (err) {
-    console.log(`File doesn't exist: ${err}`);
+    console.log(`File doesn't exist: ${err}`); // otherwise, continue
   }
 
+  const getHeader = create(); // keys stored in object under "header" property
   const csvWriter = createCsvWriter({
     path: filenameParam,
-    header,
+    header: getHeader.header,
     append: true,
-    // alwaysQuote: true,
   });
 
   let recordCount = 0;
@@ -52,8 +49,8 @@ const generator = async (filename, lines, create, unit) => {
       })
       .then(() => {
         records = [];
-      });
-    // .catch(err => console.log(err))
+      })
+      .catch((err) => console.log(err));
   }
 };
 
