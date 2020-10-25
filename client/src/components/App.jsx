@@ -79,14 +79,6 @@ class App extends React.Component {
       scores: [],
       reviewsDisplayed: [],
       modalVisible: false,
-      avgcleanlinessRating: 0,
-      avgcommunicationRating: 0,
-      avgcheckInRating: 0,
-      avgaccuracyRating: 0,
-      avglocationRating: 0,
-      avgvalueRating: 0,
-      avgtotalRating: 0,
-
       numShown: 6,
     };
 
@@ -103,7 +95,7 @@ class App extends React.Component {
         const { data } = response;
         this.setState({
           reviews: data,
-          // reviewsDisplayed: data.slice(0, this.state.numShown),
+          reviewsDisplayed: data.slice(0, this.state.numShown),
         });
       })
       .then(() => {
