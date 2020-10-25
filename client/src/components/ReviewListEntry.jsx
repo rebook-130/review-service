@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Highlighter from 'react-highlight-words';
 import styled from 'styled-components';
 
@@ -17,8 +17,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 800px) {
-    ${(props) =>
-      !props.isModal && props.isLatterEntries ? 'display: none;' : null}
+    ${(props) => (!props.isModal && props.isLatterEntries ? 'display: none;' : null)}
   }
 `;
 
@@ -106,7 +105,7 @@ class ReviewListEntry extends React.Component {
   }
 
   render() {
-    const isModal = this.props.isModal;
+    const { isModal } = this.props;
     const { review } = this.props;
 
     const isLatterEntries = this.props.entryIndex > 2;
@@ -129,7 +128,7 @@ class ReviewListEntry extends React.Component {
             <Review>
               <Highlighter
                 searchWords={[this.props.search]}
-                autoEscape={true}
+                autoEscape
                 textToHighlight={review.review_text}
               />
             </Review>
@@ -139,7 +138,7 @@ class ReviewListEntry extends React.Component {
             <Review>
               {this.state.readMoreButton ? (
                 <>
-                  {review.review_text.substring(0, 180) + '... '}
+                  {`${review.review_text.substring(0, 180)}... `}
                   <ReadMore
                     onClick={() => {
                       this.handleReadMore();

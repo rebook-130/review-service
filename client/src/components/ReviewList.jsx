@@ -17,12 +17,13 @@ const Container = styled.div`
 `;
 
 const ReviewList = ({reviews}, props) => {
-  const isModal = props.isModal;
+  const isModal = props.isModal ? true : false;
 
-  if (isModal) {
-    reviews
-  } else {
+  console.log('isModal from review lsit: ', isModal)
+  if (!isModal || isModal === undefined) {
     reviews = reviews.slice(0, 6);
+  } else {
+    reviews
   }
 
   return (

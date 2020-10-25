@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
@@ -203,32 +205,32 @@ class Modal extends React.Component {
                   this.props.close();
                 }}
               >
-              ✕
+                ✕
               </Close>
               <ArrowClose
                 onClick={() => {
                   this.props.close();
                 }}
               >
-              ＜
+                ＜
               </ArrowClose>
             </CloseContainer>
           </Header>
 
           <Content>
             <LeftContainer>
-              <TopBar isModal={true} {...this.props} avgtotalRating={scores.overall_avg}></TopBar>
-              <RatingList isModal={true} {...this.props}></RatingList>
+              <TopBar isModal {...this.props} avgtotalRating={scores.overall_avg} />
+              <RatingList isModal {...this.props} />
             </LeftContainer>
 
             <RightContainer>
-              <Search handleSearch={this.handleSearch}></Search>
+              <Search handleSearch={this.handleSearch} />
               <ReviewList
-                isModal={true}
+                isModal
                 {...this.props}
                 reviews={searchFiltered}
                 search={search}
-              ></ReviewList>
+              />
             </RightContainer>
           </Content>
         </Container>
