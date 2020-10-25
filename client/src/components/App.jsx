@@ -60,16 +60,6 @@ const ShowAllButton = styled.div`
   }
 `;
 
-const ratingKeys = [
-  'cleanlinessRating',
-  'communicationRating',
-  'checkInRating',
-  'accuracyRating',
-  'locationRating',
-  'valueRating',
-  'totalRating',
-];
-
 class App extends React.Component {
   constructor(props) {
     super(props);

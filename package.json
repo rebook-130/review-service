@@ -22,6 +22,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "aws-sdk": "^2.759.0",
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "cassandra-driver": "^4.6.0",
     "csv-writer": "^1.6.0",

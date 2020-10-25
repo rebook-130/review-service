@@ -3,9 +3,6 @@ import React from 'react';
 import Highlighter from 'react-highlight-words';
 import styled from 'styled-components';
 
-// Components
-import ProgressBar from './ProgressBar.jsx';
-
 const Container = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -63,15 +60,6 @@ const Avatar = styled.img.attrs((props) => ({
   border-radius: 50%;
 `;
 
-const AverageRating = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 12px;
-  width: 200px;
-  font-weight: 600;
-`;
-
 const Review = styled.div`
   font-size: 16px;
   font-weight: 400;
@@ -105,10 +93,12 @@ class ReviewListEntry extends React.Component {
   }
 
   render() {
-    const { isModal } = this.props;
-    const { review } = this.props;
+    const {
+      isModal, entryIndex, search, review,
+    } = this.props;
+    const { readMoreButton } = this.state;
 
-    const isLatterEntries = this.props.entryIndex > 2;
+    const isLatterEntries = entryIndex > 2;
 
     return (
       <Container isModal={isModal} isLatterEntries={isLatterEntries}>
@@ -124,19 +114,19 @@ class ReviewListEntry extends React.Component {
             </NameAndDate>
           </AvatarNameAndDate>
 
-          {this.props.search ? (
+          {search ? (
             <Review>
               <Highlighter
-                searchWords={[this.props.search]}
+                searchWords={[search]}
                 autoEscape
                 textToHighlight={review.review_text}
               />
             </Review>
           ) : null}
 
-          {!this.props.search ? (
+          {!search ? (
             <Review>
-              {this.state.readMoreButton ? (
+              {readMoreButton ? (
                 <>
                   {`${review.review_text.substring(0, 180)}... `}
                   <ReadMore

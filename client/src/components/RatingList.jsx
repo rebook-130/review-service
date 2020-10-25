@@ -85,64 +85,59 @@ const categories = [
   },
 ];
 
-const RatingList = ({ scores }, props) => {
-  const { isModal } = props;
-
-  return (
-    <Container isModal={isModal}>
-      <AllRows isModal={isModal}>
-        <CategorySubcontainer isModal={isModal}>
-          {[0, 1, 2].map((index) => {
-            const category = categories[index];
-            return (
-              <Row isModal={isModal} key={category.label}>
-                <Category isModal={isModal}>
-                  {' '}
-                  {category.label}
-                  {' '}
-                </Category>
-                <Rating>
-                  <ProgressBar
-                    completed={
+const RatingList = ({ scores, isModal }, props) => (
+  <Container isModal={isModal}>
+    <AllRows isModal={isModal}>
+      <CategorySubcontainer isModal={isModal}>
+        {[0, 1, 2].map((index) => {
+          const category = categories[index];
+          return (
+            <Row isModal={isModal} key={category.label}>
+              <Category isModal={isModal}>
+                {' '}
+                {category.label}
+                {' '}
+              </Category>
+              <Rating>
+                <ProgressBar
+                  completed={
                       (parseFloat(scores[category.propName]).toFixed(1) / 5)
                       * 100
                     }
-                    isModal={isModal}
-                  />
-                  {parseFloat(scores[category.propName]).toFixed(1)}
-                </Rating>
-              </Row>
-            );
-          })}
-        </CategorySubcontainer>
+                  isModal={isModal}
+                />
+                {parseFloat(scores[category.propName]).toFixed(1)}
+              </Rating>
+            </Row>
+          );
+        })}
+      </CategorySubcontainer>
 
-        <CategorySubcontainer isModal={isModal}>
-          {[3, 4, 5].map((index) => {
-            const category = categories[index];
-            return (
-              <Row isModal={isModal} key={category.label}>
-                <Category isModal={isModal}>
-                  {' '}
-                  {category.label}
-                  {' '}
-                </Category>
-                <Rating>
-                  <ProgressBar
-                    completed={
+      <CategorySubcontainer isModal={isModal}>
+        {[3, 4, 5].map((index) => {
+          const category = categories[index];
+          return (
+            <Row isModal={isModal} key={category.label}>
+              <Category isModal={isModal}>
+                {' '}
+                {category.label}
+                {' '}
+              </Category>
+              <Rating>
+                <ProgressBar
+                  completed={
                       (parseFloat(scores[category.propName]).toFixed(1) / 5)
                       * 100
                     }
-                    isModal={isModal}
-                  />
-                  {parseFloat(scores[category.propName]).toFixed(1)}
-                </Rating>
-              </Row>
-            );
-          })}
-        </CategorySubcontainer>
-      </AllRows>
-    </Container>
-  );
-};
-
+                  isModal={isModal}
+                />
+                {parseFloat(scores[category.propName]).toFixed(1)}
+              </Rating>
+            </Row>
+          );
+        })}
+      </CategorySubcontainer>
+    </AllRows>
+  </Container>
+);
 export default RatingList;

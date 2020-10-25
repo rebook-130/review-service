@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -17,14 +18,10 @@ const Filler = styled.div`
   border-radius: 2px;
 `;
 
-const ProgressBar = (props) => {
-  const isModal = props.isModal;
-
-  return (
-    <BarContainer isModal={isModal}>
-      <Filler completed={props.completed}></Filler>
-    </BarContainer>
-  );
-};
+const ProgressBar = ({ isModal, completed }) => (
+  <BarContainer isModal={isModal}>
+    <Filler completed={completed} />
+  </BarContainer>
+);
 
 export default ProgressBar;

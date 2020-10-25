@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -77,20 +78,24 @@ class Search extends React.Component {
     this.inputRef = React.createRef();
   }
 
+  onKeyPressed(e) {
+    const { handleSearch } = this.props;
+    const { input } = this.state;
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      handleSearch(input);
+    }
+  }
+
   handleChange(e) {
     this.setState({
       input: e.target.value,
     });
   }
 
-  onKeyPressed(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      this.props.handleSearch(this.state.input);
-    }
-  }
-
   render() {
+    const { input } = this.state;
+
     return (
       <div>
         <Container>
@@ -99,14 +104,14 @@ class Search extends React.Component {
             <SearchBar
               ref={this.inputRef}
               placeholder="Search reviews"
-              value={this.state.input}
+              value={input}
               onChange={(e) => {
                 this.handleChange(e);
               }}
               onKeyDown={(e) => this.onKeyPressed(e)}
-            ></SearchBar>
+            />
           </SearchIconAndBar>
-          {this.state.input.length > 0 ? (
+          {input.length > 0 ? (
             <CloseContainer
               onClick={() => {
                 this.setState({

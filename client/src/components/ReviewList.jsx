@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
 // Components
-import ReviewListEntry from './ReviewListEntry.jsx';
+import ReviewListEntry from './ReviewListEntry';
 
 const Container = styled.div`
   display: flex;
@@ -16,19 +17,17 @@ const Container = styled.div`
   }
 `;
 
-const ReviewList = ({reviews}, props) => {
-  const isModal = props.isModal ? true : false;
-
-  console.log('isModal from review lsit: ', isModal)
+const ReviewList = ({ reviews, isModal }, props) => {
+  let display = [];
   if (!isModal || isModal === undefined) {
-    reviews = reviews.slice(0, 6);
+    display = reviews.slice(0, 6);
   } else {
-    reviews
+    display = reviews;
   }
 
   return (
     <Container isModal={isModal}>
-      {reviews.map((review, i) => (
+      {display.map((review, i) => (
         <ReviewListEntry
           key={review.id}
           entryIndex={i}

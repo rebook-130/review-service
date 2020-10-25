@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -20,18 +21,18 @@ export const StarIcon = styled.div`
   padding: 3px 6px 3px 3px;
 `;
 
-const TopBar = (props) => {
-  const isModal = props.isModal;
-
-  return (
-    <Container>
-      <StarIcon isModal={isModal}>&#9733;</StarIcon>
-      <Title isModal={isModal}>
-        {parseFloat(props.avgtotalRating).toFixed(2)} ({props.reviewsLength}{' '}
-        reviews)
-      </Title>
-    </Container>
-  );
-};
+const TopBar = ({ isModal, reviewsLength, avgtotalRating }) => (
+  <Container>
+    <StarIcon isModal={isModal}>&#9733;</StarIcon>
+    <Title isModal={isModal}>
+      {parseFloat(avgtotalRating).toFixed(2)}
+      {' '}
+      (
+      {reviewsLength}
+      {' '}
+      reviews)
+    </Title>
+  </Container>
+);
 
 export default TopBar;
