@@ -93,7 +93,6 @@ class App extends React.Component {
         const { data } = response;
         this.setState({
           reviews: data,
-          reviewsDisplayed: data.slice(0, this.state.numShown),
         });
       })
       .then(() => {
