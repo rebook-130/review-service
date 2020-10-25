@@ -1,13 +1,13 @@
 import React from 'react';
-import $ from 'jquery';
-import styled from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
+// import $ from 'jquery';
+import styled, { createGlobalStyle } from 'styled-components';
+import axios from 'axios';
 
 // Components
-import TopBar from './TopBar.jsx';
-import RatingList from './RatingList.jsx';
-import ReviewList from './ReviewList.jsx';
-import Modal from './Modal.jsx';
+import TopBar from './TopBar';
+import RatingList from './RatingList';
+import ReviewList from './ReviewList';
+import Modal from './Modal';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -76,6 +76,7 @@ class App extends React.Component {
 
     this.state = {
       reviews: [],
+      scores: [],
       reviewsDisplayed: [],
       modalVisible: false,
       avgcleanlinessRating: 0,
@@ -97,71 +98,76 @@ class App extends React.Component {
   }
 
   getAllReviews() {
-    $.ajax({
-      url: `/api${window.location.pathname}`,
-      type: 'GET',
-      dataType: 'json',
-      success: (responseData) => {
-        for (const ratingKey of ratingKeys) {
-          let total = 0;
-          for (const review of responseData) {
-            total = total + review[ratingKey];
-          }
-          const average = total / responseData.length;
-          this.setState({
-            [`avg${ratingKey}`]: average,
-          });
-        }
+    axios.get(`/api${window.location.pathname}/reviews`)
+      .then((response) => {
+        const { data } = response;
         this.setState({
-          reviews: responseData,
-          reviewsDisplayed: responseData.slice(0, this.state.numShown),
+          reviews: data,
+          // reviewsDisplayed: data.slice(0, this.state.numShown),
         });
-      },
-    });
+      })
+      .then(() => {
+        axios.get(`/api${window.location.pathname}/scores`)
+          .then((response) => {
+            const { data } = response;
+            this.setState({
+              scores: data,
+            });
+          });
+      })
+      .catch((err) => console.log(err));
   }
 
   toggleModalVisibility() {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
+    this.setState((prevState) => ({
+      modalVisible: !prevState.modalVisible,
+    }));
   }
 
   render() {
+    const { state } = this;
     return (
       <>
         <AppContainer>
           <GlobalStyle />
 
           <TopBar
-            avgtotalRating={this.state.avgtotalRating}
-            reviewsLength={this.state.reviews.length}
+            avgtotalRating={state.scores.overall_avg}
+            reviewsLength={state.reviews.length}
           />
 
-          <RatingList {...this.state} />
+          <RatingList scores={state.scores} />
 
-          <ReviewList reviewsDisplayed={this.state.reviewsDisplayed} />
+          <ReviewList
+            reviewsDisplayed={state.reviewsDisplayed}
+            reviews={state.reviews}
+          />
 
-          {this.state.reviews.length > this.state.numShown ? (
+          {state.reviews.length > state.numShown ? (
             <ButtonContainer>
               <ShowAllButton
                 onClick={() => {
                   this.toggleModalVisibility();
                 }}
               >
-                Show all {this.state.reviews.length} reviews
+                Show all
+                {' '}
+                {state.reviews.length}
+                {' '}
+                reviews
               </ShowAllButton>
             </ButtonContainer>
           ) : null}
         </AppContainer>
 
-        {this.state.modalVisible ? (
+        {state.modalVisible ? (
           <Modal
             close={() => {
               this.toggleModalVisibility();
             }}
             {...this.state}
-            reviewsLength={this.state.reviews.length}
-          ></Modal>
+            reviewsLength={state.reviews.length}
+          />
         ) : null}
       </>
     );

@@ -16,19 +16,18 @@ const Container = styled.div`
   }
 `;
 
-const ReviewList = (props) => {
+const ReviewList = ({reviews}, props) => {
   const isModal = props.isModal;
 
-  let reviews = props.reviewsDisplayed;
   if (isModal) {
-    reviews = props.reviews;
+    reviews
   }
 
   return (
     <Container isModal={isModal}>
       {reviews.map((review, i) => (
         <ReviewListEntry
-          key={i}
+          key={review.id}
           entryIndex={i}
           review={review}
           isModal={isModal}

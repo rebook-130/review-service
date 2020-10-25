@@ -93,7 +93,7 @@ class ReviewListEntry extends React.Component {
     super(props);
 
     this.state = {
-      readMoreButton: props.review.review.length > 180,
+      readMoreButton: props.review.review_text.length > 180,
     };
 
     this.handleReadMore = this.handleReadMore.bind(this);
@@ -107,6 +107,7 @@ class ReviewListEntry extends React.Component {
 
   render() {
     const isModal = this.props.isModal;
+    const { review } = this.props;
 
     const isLatterEntries = this.props.entryIndex > 2;
 
@@ -115,29 +116,21 @@ class ReviewListEntry extends React.Component {
         <AvatarNameDateAndReview>
           <AvatarNameAndDate>
             <AvatarContainer>
-              <Avatar src={this.props.review.image} />
+              <Avatar src={review.user_avatar} />
             </AvatarContainer>
 
             <NameAndDate>
-              <Name>{this.props.review.username}</Name>
-              <Date>{this.props.review.dateStr}</Date>
+              <Name>{review.user_first_name}</Name>
+              <Date>{review.time_formatted}</Date>
             </NameAndDate>
           </AvatarNameAndDate>
-          <AverageRating>
-            <ProgressBar
-              completed={
-                (parseFloat(this.props.review.totalRating).toFixed(1) / 5) * 100
-              }
-            ></ProgressBar>
-            {parseFloat(this.props.review.totalRating).toFixed(1)}
-          </AverageRating>
 
           {this.props.search ? (
             <Review>
               <Highlighter
                 searchWords={[this.props.search]}
                 autoEscape={true}
-                textToHighlight={this.props.review.review}
+                textToHighlight={review.review_text}
               />
             </Review>
           ) : null}
@@ -146,7 +139,7 @@ class ReviewListEntry extends React.Component {
             <Review>
               {this.state.readMoreButton ? (
                 <>
-                  {this.props.review.review.substring(0, 180) + '... '}
+                  {review.review_text.substring(0, 180) + '... '}
                   <ReadMore
                     onClick={() => {
                       this.handleReadMore();
@@ -156,7 +149,7 @@ class ReviewListEntry extends React.Component {
                   </ReadMore>
                 </>
               ) : (
-                this.props.review.review
+                review.review_text
               )}
             </Review>
           ) : null}

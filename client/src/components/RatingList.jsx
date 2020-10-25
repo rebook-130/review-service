@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 
-//Components
-import ProgressBar from './ProgressBar.jsx';
+// Components
+import ProgressBar from './ProgressBar';
 
 const Container = styled.div`
   display: flex;
@@ -17,15 +19,13 @@ const AllRows = styled.div`
   padding-bottom: 20px;
   ${(props) => (props.isModal ? null : 'justify-content: space-between')};
 
-  ${(props) =>
-    props.isModal
-      ? '@media (max-width: 1220px) {flex-direction: row; justify-content: space-between;}'
-      : '@media (max-width: 800px) {display: none;}'};
+  ${(props) => (props.isModal
+    ? '@media (max-width: 1220px) {flex-direction: row; justify-content: space-between;}'
+    : '@media (max-width: 800px) {display: none;}')};
 
-  ${(props) =>
-    props.isModal
-      ? '@media (max-width: 730px) {flex-direction: column; justify-content: flex-start;}'
-      : null};
+  ${(props) => (props.isModal
+    ? '@media (max-width: 730px) {flex-direction: column; justify-content: flex-start;}'
+    : null)};
 `;
 
 const CategorySubcontainer = styled.div`
@@ -35,8 +35,7 @@ const CategorySubcontainer = styled.div`
     ${(props) => (props.isModal ? 'width: 40%; min-width: 200px' : null)}
   }
 
-  ${(props) =>
-    props.isModal ? '@media (max-width: 730px) {width: 100%;}' : null};
+  ${(props) => (props.isModal ? '@media (max-width: 730px) {width: 100%;}' : null)};
 `;
 
 export const Row = styled.div`
@@ -62,32 +61,32 @@ const Rating = styled.div`
 const categories = [
   {
     label: 'Cleanliness',
-    propName: 'avgcleanlinessRating',
+    propName: 'cleanliness_avg',
   },
   {
     label: 'Communication',
-    propName: 'avgcommunicationRating',
+    propName: 'communication_avg',
   },
   {
     label: 'Check-In',
-    propName: 'avgcheckInRating',
+    propName: 'checkinrating_avg',
   },
   {
     label: 'Accuracy',
-    propName: 'avgaccuracyRating',
+    propName: 'accuracy_avg',
   },
   {
     label: 'Location',
-    propName: 'avglocationRating',
+    propName: 'location_avg',
   },
   {
     label: 'Value',
-    propName: 'avgvalueRating',
+    propName: 'value_avg',
   },
 ];
 
-const RatingList = (props) => {
-  const isModal = props.isModal;
+const RatingList = ({ scores }, props) => {
+  const { isModal } = props;
 
   return (
     <Container isModal={isModal}>
@@ -96,17 +95,21 @@ const RatingList = (props) => {
           {[0, 1, 2].map((index) => {
             const category = categories[index];
             return (
-              <Row isModal={isModal}>
-                <Category isModal={isModal}> {category.label} </Category>
+              <Row isModal={isModal} key={category.label}>
+                <Category isModal={isModal}>
+                  {' '}
+                  {category.label}
+                  {' '}
+                </Category>
                 <Rating>
                   <ProgressBar
                     completed={
-                      (parseFloat(props[category.propName]).toFixed(1) / 5) *
-                      100
+                      (parseFloat(scores[category.propName]).toFixed(1) / 5)
+                      * 100
                     }
                     isModal={isModal}
-                  ></ProgressBar>
-                  {parseFloat(props[category.propName]).toFixed(1)}
+                  />
+                  {parseFloat(scores[category.propName]).toFixed(1)}
                 </Rating>
               </Row>
             );
@@ -117,17 +120,21 @@ const RatingList = (props) => {
           {[3, 4, 5].map((index) => {
             const category = categories[index];
             return (
-              <Row isModal={isModal}>
-                <Category isModal={isModal}> {category.label} </Category>
+              <Row isModal={isModal} key={category.label}>
+                <Category isModal={isModal}>
+                  {' '}
+                  {category.label}
+                  {' '}
+                </Category>
                 <Rating>
                   <ProgressBar
                     completed={
-                      (parseFloat(props[category.propName]).toFixed(1) / 5) *
-                      100
+                      (parseFloat(scores[category.propName]).toFixed(1) / 5)
+                      * 100
                     }
                     isModal={isModal}
-                  ></ProgressBar>
-                  {parseFloat(props[category.propName]).toFixed(1)}
+                  />
+                  {parseFloat(scores[category.propName]).toFixed(1)}
                 </Rating>
               </Row>
             );
