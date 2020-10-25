@@ -178,8 +178,8 @@ class Modal extends React.Component {
   }
 
   render() {
-    const reviews = this.props.reviews;
-    const search = this.state.search;
+    const { reviews, scores } = this.props;
+    const { search } = this.state;
 
     let searchFiltered = reviews;
     if (search) {
@@ -187,7 +187,7 @@ class Modal extends React.Component {
 
       for (let i = 0; i < reviews.length; i++) {
         const review = reviews[i];
-        if (review.review.toLowerCase().includes(search.toLowerCase())) {
+        if (review.review_text.toLowerCase().includes(search.toLowerCase())) {
           searchFiltered.push(review);
         }
       }
@@ -217,7 +217,7 @@ class Modal extends React.Component {
 
           <Content>
             <LeftContainer>
-              <TopBar isModal={true} {...this.props}></TopBar>
+              <TopBar isModal={true} {...this.props} avgtotalRating={scores.overall_avg}></TopBar>
               <RatingList isModal={true} {...this.props}></RatingList>
             </LeftContainer>
 

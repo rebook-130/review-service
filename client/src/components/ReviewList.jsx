@@ -21,6 +21,8 @@ const ReviewList = ({reviews}, props) => {
 
   if (isModal) {
     reviews
+  } else {
+    reviews = reviews.slice(0, 6);
   }
 
   return (

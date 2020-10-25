@@ -77,9 +77,7 @@ class App extends React.Component {
     this.state = {
       reviews: [],
       scores: [],
-      reviewsDisplayed: [],
       modalVisible: false,
-      numShown: 6,
     };
 
     this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
@@ -131,11 +129,10 @@ class App extends React.Component {
           <RatingList scores={state.scores} />
 
           <ReviewList
-            reviewsDisplayed={state.reviewsDisplayed}
             reviews={state.reviews}
           />
 
-          {state.reviews.length > state.numShown ? (
+          {state.reviews.length > 6 ? (
             <ButtonContainer>
               <ShowAllButton
                 onClick={() => {
@@ -158,6 +155,7 @@ class App extends React.Component {
               this.toggleModalVisibility();
             }}
             {...this.state}
+            scores={state.scores}
             reviewsLength={state.reviews.length}
           />
         ) : null}
