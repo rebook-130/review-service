@@ -5,7 +5,7 @@ const Routes = require('./controller.js');
 const router = express.Router();
 
 router.get('/listing*', (req, res) => {
-  res.setHeader('content-type', 'text/html');
+  //res.setHeader('content-type', 'text/html');
   res.sendFile(path.resolve(`${__dirname}/../client/dist/index.html`));
 });
 
