@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 // import $ from 'jquery';
 import styled, { createGlobalStyle } from 'styled-components';
