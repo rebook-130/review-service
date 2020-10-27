@@ -14,8 +14,8 @@ export const options = {
     http_req_duration: ['p(95)<100'], // 99% of requests must complete below 1.5s
   },
   stages: [
-    { duration: '30s', target: 1500 }, // below normal load
-    // { duration: '1m', target: 500 },
+    { duration: '30s', target: 1600 }, // below normal load
+    { duration: '1m', target: 1600 },
     // { duration: '30s', target: 1000 }, // normal load
     // { duration: '1m', target: 500 },
     // { duration: '30s', target: 200 }, // scale down. Recovery stage.,
