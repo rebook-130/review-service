@@ -1,13 +1,15 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import $ from 'jquery';
-import styled from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
+// import $ from 'jquery';
+import styled, { createGlobalStyle } from 'styled-components';
+import axios from 'axios';
 
 // Components
-import TopBar from './TopBar.jsx';
-import RatingList from './RatingList.jsx';
-import ReviewList from './ReviewList.jsx';
-import Modal from './Modal.jsx';
+import TopBar from './TopBar';
+import RatingList from './RatingList';
+import ReviewList from './ReviewList';
+import Modal from './Modal';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -60,33 +62,14 @@ const ShowAllButton = styled.div`
   }
 `;
 
-const ratingKeys = [
-  'cleanlinessRating',
-  'communicationRating',
-  'checkInRating',
-  'accuracyRating',
-  'locationRating',
-  'valueRating',
-  'totalRating',
-];
-
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       reviews: [],
-      reviewsDisplayed: [],
+      scores: [],
       modalVisible: false,
-      avgcleanlinessRating: 0,
-      avgcommunicationRating: 0,
-      avgcheckInRating: 0,
-      avgaccuracyRating: 0,
-      avglocationRating: 0,
-      avgvalueRating: 0,
-      avgtotalRating: 0,
-
-      numShown: 6,
     };
 
     this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
@@ -97,71 +80,75 @@ class App extends React.Component {
   }
 
   getAllReviews() {
-    $.ajax({
-      url: `/api${window.location.pathname}`,
-      type: 'GET',
-      dataType: 'json',
-      success: (responseData) => {
-        for (const ratingKey of ratingKeys) {
-          let total = 0;
-          for (const review of responseData) {
-            total = total + review[ratingKey];
-          }
-          const average = total / responseData.length;
-          this.setState({
-            [`avg${ratingKey}`]: average,
-          });
-        }
+    axios.get(`/api${window.location.pathname}/reviews`)
+      .then((response) => {
+        const { data } = response;
         this.setState({
-          reviews: responseData,
-          reviewsDisplayed: responseData.slice(0, this.state.numShown),
+          reviews: data,
         });
-      },
-    });
+      })
+      .then(() => {
+        axios.get(`/api${window.location.pathname}/scores`)
+          .then((response) => {
+            const { data } = response;
+            this.setState({
+              scores: data,
+            });
+          });
+      })
+      .catch((err) => console.log(err));
   }
 
   toggleModalVisibility() {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
+    this.setState((prevState) => ({
+      modalVisible: !prevState.modalVisible,
+    }));
   }
 
   render() {
+    const { state } = this;
     return (
       <>
         <AppContainer>
           <GlobalStyle />
 
           <TopBar
-            avgtotalRating={this.state.avgtotalRating}
-            reviewsLength={this.state.reviews.length}
+            avgtotalRating={state.scores.overall_avg}
+            reviewsLength={state.reviews.length}
           />
 
-          <RatingList {...this.state} />
+          <RatingList scores={state.scores} />
 
-          <ReviewList reviewsDisplayed={this.state.reviewsDisplayed} />
+          <ReviewList
+            reviews={state.reviews}
+          />
 
-          {this.state.reviews.length > this.state.numShown ? (
+          {state.reviews.length > 6 ? (
             <ButtonContainer>
               <ShowAllButton
                 onClick={() => {
                   this.toggleModalVisibility();
                 }}
               >
-                Show all {this.state.reviews.length} reviews
+                Show all
+                {' '}
+                {state.reviews.length}
+                {' '}
+                reviews
               </ShowAllButton>
             </ButtonContainer>
           ) : null}
         </AppContainer>
 
-        {this.state.modalVisible ? (
+        {state.modalVisible ? (
           <Modal
             close={() => {
               this.toggleModalVisibility();
             }}
             {...this.state}
-            reviewsLength={this.state.reviews.length}
-          ></Modal>
+            scores={state.scores}
+            reviewsLength={state.reviews.length}
+          />
         ) : null}
       </>
     );

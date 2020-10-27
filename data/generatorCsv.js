@@ -27,7 +27,7 @@ const generator = async (filename, lines, create, unit) => {
 
   let recordCount = 0;
   while (recordCount < linesParam) {
-    let records = [];
+    const records = [];
     for (let i = 0; i < linesParam / 100; i += 1) {
       recordCount += 1;
       const record = create();

@@ -1,11 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 // Components
-import TopBar from './TopBar.jsx';
-import RatingList from './RatingList.jsx';
-import ReviewList from './ReviewList.jsx';
-import Search from './Search.jsx';
+import TopBar from './TopBar';
+import RatingList from './RatingList';
+import ReviewList from './ReviewList';
+import Search from './Search';
 
 const fadeIn = keyframes`
   0% {
@@ -178,16 +180,16 @@ class Modal extends React.Component {
   }
 
   render() {
-    const reviews = this.props.reviews;
-    const search = this.state.search;
+    const { reviews, scores, close } = this.props;
+    const { search } = this.state;
 
     let searchFiltered = reviews;
     if (search) {
       searchFiltered = [];
 
-      for (let i = 0; i < reviews.length; i++) {
+      for (let i = 0; i < reviews.length; i += 1) {
         const review = reviews[i];
-        if (review.review.toLowerCase().includes(search.toLowerCase())) {
+        if (review.review_text.toLowerCase().includes(search.toLowerCase())) {
           searchFiltered.push(review);
         }
       }
@@ -200,35 +202,35 @@ class Modal extends React.Component {
             <CloseContainer>
               <Close
                 onClick={() => {
-                  this.props.close();
+                  close();
                 }}
               >
-              ✕
+                ✕
               </Close>
               <ArrowClose
                 onClick={() => {
-                  this.props.close();
+                  close();
                 }}
               >
-              ＜
+                ＜
               </ArrowClose>
             </CloseContainer>
           </Header>
 
           <Content>
             <LeftContainer>
-              <TopBar isModal={true} {...this.props}></TopBar>
-              <RatingList isModal={true} {...this.props}></RatingList>
+              <TopBar isModal {...this.props} avgtotalRating={scores.overall_avg} />
+              <RatingList isModal {...this.props} />
             </LeftContainer>
 
             <RightContainer>
-              <Search handleSearch={this.handleSearch}></Search>
+              <Search handleSearch={this.handleSearch} />
               <ReviewList
-                isModal={true}
+                isModal
                 {...this.props}
                 reviews={searchFiltered}
                 search={search}
-              ></ReviewList>
+              />
             </RightContainer>
           </Content>
         </Container>
