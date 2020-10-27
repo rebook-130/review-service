@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
@@ -25,10 +26,15 @@ const generator = async (filename, lines, create, unit) => {
     append: true,
   });
 
+  const { header } = getHeader;
+  const headerObj = {};
+  const headerLine = header.forEach((key) => (headerObj[key] = key));
+
   let recordCount = 0;
   while (recordCount < linesParam) {
     const records = [];
-    for (let i = 0; i < linesParam / 100; i += 1) {
+    if (recordCount === 0) { records.push(headerObj); }
+    for (let i = 0; i < linesParam / 50; i += 1) {
       recordCount += 1;
       const record = create();
       if (cassandra) {
