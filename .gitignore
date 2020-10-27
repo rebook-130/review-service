@@ -30,3 +30,5 @@ yarn.lock
 *.csv
 
 newrelic.js
+
+data/dsbulk-1.7.0

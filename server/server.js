@@ -1,11 +1,18 @@
 /* eslint-disable no-console */
+require('newrelic');
 const express = require('express');
 const bodyparser = require('body-parser');
 const router = require('./router');
 
 const app = express();
 
-app.use(express.static(`${__dirname}/../client/dist`));
+//app.use(express.static(`${__dirname}/../client/dist`));
+
+// router.get('/listing*', (req, res) => {
+//   // res.setHeader('content-type', 'text/html');
+//   res.sendFile(path.resolve(`${__dirname}/../client/dist/index.html`));
+// });
+
 app.use(bodyparser.json());
 
 const port = 3003;
@@ -13,7 +20,7 @@ app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
 
-app.use('/', router);
+app.use('/api', router);
 
 // app.post('/api/rooms/:roomId/reviews', (req, res) => {
 //   const newReview = req.body;

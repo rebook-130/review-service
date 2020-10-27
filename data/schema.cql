@@ -1,6 +1,6 @@
 DROP KEYSPACE IF EXISTS reviews;
 
-CREATE KEYSPACE  IF NOT EXISTS reviews WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1};
+CREATE KEYSPACE  IF NOT EXISTS reviews WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
 
 USE reviews;
 
@@ -45,4 +45,4 @@ CREATE TABLE IF NOT EXISTS reviews.scores_by_listing
 
 COPY reviews_by_listing FROM '/Volumes/sdc/cassandra/review_text.csv';
 
-COPY scores_by_listing FROM '/Volumes/sdc/cassandra_split/review_scores.csv';
+COPY scores_by_listing FROM '/Volumes/sdc/cassandra/review_scores.csv';

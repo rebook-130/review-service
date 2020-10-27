@@ -8,7 +8,7 @@ const {
   createTitle, cancellation, paragraphs, dates,
 } = require('./seedHelpers');
 
-const random = function random(min, max) { return Math.ceil(Math.random() * (max - min) + min); };
+const random = (min, max) => Math.floor((Math.random() * (max - min)) + 1);
 
 const createReviewText = () => {
   const date = dates();
@@ -52,5 +52,5 @@ const createReviewScores = () => {
 };
 
 // Create 52 million reviews
-// generator('/Volumes/sdc/cassandra/review_text.csv', 50000000, createReviewText, 'reviews text');
-generator('/Volumes/sdc/cassandra_split/review_scores.csv', 5000000, createReviewScores, 'review scores');
+generator('/Volumes/sdc/cassandra/review_text.csv', 50000000, createReviewText, 'reviews text');
+// generator('/Volumes/sdc/cassandra_split/review_scores.csv', 5000000, createReviewScores, 'review scores');
