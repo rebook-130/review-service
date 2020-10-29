@@ -26,7 +26,7 @@ app.use('/apitest/hello', (req,res) => {
 	res.send('Hello world from server 1!')
 })
 
-app.use('/', (req,res) => {
+app.use('/loaderio-20d6711b9ccfdcba424791186c1dbace', (req,res) => {
 res.send('loaderio-20d6711b9ccfdcba424791186c1dbace')
 });
 
