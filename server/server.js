@@ -17,10 +17,18 @@ app.use(bodyparser.json());
 
 const port = 3003;
 app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+  console.log(`Listening at AMAZON PUBLIC IP:${port}`);
 });
 
 app.use('/api', router);
+
+app.get('/apitest/hello', (req,res) => {
+	res.send('Hello world!')
+})
+
+app.get('/loaderio-20d6711b9ccfdcba424791186c1dbace', (req,res) => {
+res.send('loaderio-20d6711b9ccfdcba424791186c1dbace')
+});
 
 // app.post('/api/rooms/:roomId/reviews', (req, res) => {
 //   const newReview = req.body;
