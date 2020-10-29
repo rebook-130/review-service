@@ -23,7 +23,7 @@ app.listen(port, () => {
 app.use('/api', router);
 
 app.use('/apitest/hello', (req,res) => {
-	res.send('Hello world!')
+	res.send('Hello world from server 1!')
 })
 
 app.use('/', (req,res) => {
