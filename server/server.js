@@ -22,11 +22,11 @@ app.listen(port, () => {
 
 app.use('/api', router);
 
-app.get('/apitest/hello', (req,res) => {
+app.use('/apitest/hello', (req,res) => {
 	res.send('Hello world!')
 })
 
-app.get('/loaderio-20d6711b9ccfdcba424791186c1dbace', (req,res) => {
+app.use('/', (req,res) => {
 res.send('loaderio-20d6711b9ccfdcba424791186c1dbace')
 });
 
