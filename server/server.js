@@ -26,8 +26,8 @@ app.use('/apitest/hello', (req,res) => {
 	res.send('Hello world from server 1!')
 })
 
-app.get('/loaderio-e6fbbd60d8d0d362a02526bbeb82802c', (req,res) => {
-res.send('loaderio-e6fbbd60d8d0d362a02526bbeb82802c')
+app.get('/loaderio-303ca76d18ff94854c5f8591e2583143', (req,res) => {
+res.send('loaderio-303ca76d18ff94854c5f8591e2583143')
 });
 
 // app.post('/api/rooms/:roomId/reviews', (req, res) => {
